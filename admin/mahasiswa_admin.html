@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Mahasiswa - Admin Calcer</title>
+    <!-- FontAwesome Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="mahasiswa_admin.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h2>Calcer Admin</h2>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="dashboard_admin.html"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
+            </li>
+            <li class="active">
+                <a href="mahasiswa_admin.html"><i class="fa-solid fa-users"></i><span>Data Mahasiswa</span></a>
+            </li>
+            <li>
+                <a href="Prestasi_admin.html"><i class="fa-solid fa-trophy"></i><span>Kelola Prestasi</span></a>
+            </li>
+            <li>
+                <a href="kenangan_admin.html"><i class="fa-solid fa-images"></i><span>Kelola Kenangan</span></a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="login_admin.html" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i><span>Keluar</span></a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="welcome-text">
+                <h1>Kelola Data Mahasiswa</h1>
+                <p>Tambah, edit, cari, dan hapus data mahasiswa Calcer Official</p>
+            </div>
+            <div class="user-profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>Muhammad Nabil</span>
+            </div>
+        </header>
+
+        <!-- CRUD Section -->
+        <section class="crud-section">
+            <div class="table-header-action">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchMhs" placeholder="Cari Nama atau NIM...">
+                </div>
+                <button class="btn-primary" id="btnOpenAddModal">
+                    <i class="fa-solid fa-user-plus"></i> Tambah Mahasiswa
+                </button>
+            </div>
+
+            <!-- Tabel Data -->
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NIM</th>
+                            <th>Nama Lengkap</th>
+                            <th>Angkatan</th>
+                            <th>Jabatan</th>
+                            <th>Sub Jabatan</th>
+                            <th>Status</th>
+                            <th>Foto</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mhsTableBody">
+                        <!-- Data akan di-load secara dinamis melalui JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Form (Tambah & Edit) -->
+    <div class="modal" id="modalMhs">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Tambah Data Mahasiswa</h3>
+                <span class="close-modal" id="btnCloseModal">&times;</span>
+            </div>
+            <form id="formMhs">
+                <input type="hidden" id="editIndex" value="">
+                
+                <div class="form-group">
+                    <label for="inputNim">NIM</label>
+                    <input type="text" id="inputNim" required placeholder="Contoh: 0320260001">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputNama">Nama Lengkap</label>
+                    <input type="text" id="inputNama" required placeholder="Masukkan nama lengkap">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputRole">Jabatan</label>
+                    <select id="inputRole" required>
+                        <option value="Anggota">Anggota</option>
+                        <option value="Pengurus">Pengurus</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="groupSubJabatan" style="display: none;">
+                    <label for="inputSubJabatan">Sub Jabatan</label>
+                    <select id="inputSubJabatan">
+                        <option value="">-- Pilih Sub Jabatan --</option>
+                        <option value="Ketua Kelas">Ketua Kelas</option>
+                        <option value="Wakil Kelas">Wakil Kelas</option>
+                        <option value="Sekretaris">Sekretaris</option>
+                        <option value="Bendahara 1">Bendahara 1</option>
+                        <option value="Bendahara 2">Bendahara 2</option>
+                        <option value="Kebersihan">Kebersihan</option>
+                        <option value="PIC 1">PIC 1</option>
+                        <option value="PIC 2">PIC 2</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputFoto">Upload Foto (Opsional)</label>
+                    <input type="file" id="inputFoto" accept="image/*">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="btnCancelModal">Batal</button>
+                    <button type="submit" class="btn-primary" id="btnSaveMhs">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script Import -->
+    <script src="../koneksi_database.js"></script>
+    <script src="mahasiswa_admin.js"></script>
+</body>
+</html>

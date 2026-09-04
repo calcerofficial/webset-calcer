@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Kenangan - Admin Calcer</title>
+    <!-- FontAwesome Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="kenangan_admin.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h2>Calcer Admin</h2>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="dashboard_admin.html"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
+            </li>
+            <li>
+                <a href="mahasiswa_admin.html"><i class="fa-solid fa-users"></i><span>Data Mahasiswa</span></a>
+            </li>
+            <li>
+                <a href="Prestasi_admin.html"><i class="fa-solid fa-trophy"></i><span>Kelola Prestasi</span></a>
+            </li>
+            <li class="active">
+                <a href="kenangan_admin.html"><i class="fa-solid fa-images"></i><span>Kelola Kenangan</span></a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="login_admin.html" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i><span>Keluar</span></a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="welcome-text">
+                <h1>Kelola Foto Kenangan</h1>
+                <p>Tambah, edit, dan hapus galeri album kenangan kelas</p>
+            </div>
+            <div class="user-profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>Muhammad Nabil</span>
+            </div>
+        </header>
+
+        <!-- CRUD Section -->
+        <section class="crud-section">
+            <div class="table-header-action">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchKenangan" placeholder="Cari judul foto...">
+                </div>
+                <button class="btn-primary" id="btnOpenAddModal">
+                    <i class="fa-solid fa-plus"></i> Upload Kenangan
+                </button>
+            </div>
+
+            <!-- Tabel Data -->
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Foto</th>
+                            <th>Judul Foto</th>
+                            <th>Tanggal Upload</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="kenanganTableBody">
+                        <!-- Data dimasukkan secara dinamis -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Form (Tambah / Edit) -->
+    <div class="modal" id="modalKenangan">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Tambah Foto Kenangan</h3>
+                <span class="close-modal" id="btnCloseModal">&times;</span>
+            </div>
+            <form id="formKenangan">
+                <input type="hidden" id="editId" value="">
+
+                <div class="form-group">
+                    <label for="inputJudul">Judul Foto *</label>
+                    <input type="text" id="inputJudul" maxlength="150" required placeholder="Contoh: Makrab Calcer 2026">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputFoto">Foto (URL / Path Gambar) *</label>
+                    <input type="text" id="inputFoto" required placeholder="Contoh: ../uploads/makrab.jpg atau https://link.com/foto.jpg">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="btnCancelModal">Batal</button>
+                    <button type="submit" class="btn-primary">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script Import -->
+    <script src="kenangan_admin.js"></script>
+</body>
+</html>

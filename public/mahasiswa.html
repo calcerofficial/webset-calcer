@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahasiswa - Calcer Official</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="mahasiswa.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-left">
+            <img src="../assets/logokelas.png" alt="Logo Kelas" class="logo-img">
+            <h2>Calcer Official</h2>
+        </div>
+
+        <nav class="nav-links">
+            <a href="dashboard.html" class="nav-item">Dashboard</a>
+            <a href="dashboard.html#about" class="nav-item">About</a>
+            <a href="mahasiswa.html" class="nav-item active">Mahasiswa</a>
+            <a href="prestasi.html" class="nav-item">Prestasi</a>
+            <a href="kenangan.html" class="nav-item">Kenangan</a>
+        </nav>
+
+        <div class="nav-right">
+            <img src="../assets/logoastra.png" alt="Logo Astra" class="logo-img">
+        </div>
+    </header>
+
+    <main class="main-wrapper" style="padding-top: 0; background-color: #e2e8f0; min-height: 100vh;">
+        <!-- Gelombang Atas -->
+        <div class="mhs-wave-top">
+            <svg class="mhs-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="mhs-gentle-wave-top" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                </defs>
+                <g class="mhs-parallax-top">
+                    <use xlink:href="#mhs-gentle-wave-top" x="48" y="0" fill="rgba(59, 130, 246, 0.3)" />
+                    <use xlink:href="#mhs-gentle-wave-top" x="48" y="3" fill="rgba(30, 64, 175, 0.25)" />
+                    <use xlink:href="#mhs-gentle-wave-top" x="48" y="5" fill="rgba(15, 23, 42, 0.4)" />
+                    <use xlink:href="#mhs-gentle-wave-top" x="48" y="7" fill="rgba(15, 23, 42, 0.7)" />
+                </g>
+            </svg>
+        </div>
+
+        <!-- Header Pengurus Kelas -->
+        <div class="mhs-page-header">
+            <span class="mhs-badge">👥 Kelas 2C</span>
+            <h1 class="mhs-page-title">Pengurus Kelas</h1>
+            <p class="mhs-page-sub">Manajemen Informatika · Calcer Official</p>
+        </div>
+
+        <!-- Gelombang Animasi -->
+        <div class="mhs-wave-divider">
+            <svg class="mhs-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="mhs-gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                </defs>
+                <g class="mhs-parallax">
+                    <use xlink:href="#mhs-gentle-wave" x="48" y="0" fill="rgba(59, 130, 246, 0.4)" />
+                    <use xlink:href="#mhs-gentle-wave" x="48" y="3" fill="rgba(59, 130, 246, 0.25)" />
+                    <use xlink:href="#mhs-gentle-wave" x="48" y="5" fill="rgba(30, 64, 175, 0.3)" />
+                    <use xlink:href="#mhs-gentle-wave" x="48" y="7" fill="#0f172a" />
+                </g>
+            </svg>
+        </div>
+
+        <div style="width: 100%; margin: 0 auto; position: relative;">
+            <!-- Bagian Pengurus (Di Tiban) -->
+            <div class="tiban-container">
+                <img src="../assets/fotoastra.jpg" alt="Background Astra" class="bg-image">
+                <img src="../assets/fotocontoh1.png" alt="Foto Pengurus" class="fg-image" id="pengurus-img">
+                
+                <!-- Label Peran / Jabatan -->
+                <div class="role-label" id="pengurus-role">Ketua Kelas</div>
+
+                <!-- Navigasi Slider -->
+                <button class="slider-btn prev-btn" onclick="gantiOrang(-1)">&#10094;</button>
+                <button class="slider-btn next-btn" onclick="gantiOrang(1)">&#10095;</button>
+            </div>
+        </div>
+
+        <!-- SECTION: Mahasiswa -->
+        <div class="mhs-section">
+            <div class="mhs-section-header">
+                <h2 class="mhs-section-title">Mahasiswa</h2>
+                <p class="mhs-section-sub">Keluarga besar Kelas 2C — Manajemen Informatika</p>
+            </div>
+
+            <div class="mhs-grid" id="mhsGridContainer">
+                <!-- Data mahasiswa akan dimuat di sini secara dinamis -->
+            </div>
+        </div>
+    </main>
+
+    <!-- ===== MODAL PROFIL MAHASISWA ===== -->
+    <div class="modal-overlay" id="modalOverlay" onclick="tutupModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="tutupModal()">&#10005;</button>
+            <div class="modal-photo-area">
+                <!-- Navigasi Kiri -->
+                <button class="modal-nav-btn modal-prev" id="modalPrevBtn" onclick="pindahFoto(-1)">&#10094;</button>
+
+                <div class="modal-photo-circle">
+                    <img id="modal-foto" src="" alt="Foto Mahasiswa" style="display:none; width:100%; height:100%; object-fit:cover; border-radius:50%;">
+                    <span id="modal-avatar" style="font-size:3.5rem;">👤</span>
+                </div>
+                <span class="modal-status-badge" id="modal-status">Aktif</span>
+
+                <!-- Navigasi Kanan -->
+                <button class="modal-nav-btn modal-next" id="modalNextBtn" onclick="pindahFoto(1)">&#10095;</button>
+
+                <!-- Counter foto -->
+                <div class="modal-counter" id="modal-counter"></div>
+            </div>
+            <div class="modal-body">
+                <h2 class="modal-nama" id="modal-nama">Nama Mahasiswa</h2>
+                <p class="modal-prodi" id="modal-prodi">Manajemen Informatika</p>
+                <div class="modal-info-grid">
+                    <div class="modal-info-item">
+                        <span class="modal-info-icon">🪪</span>
+                        <div>
+                            <p class="modal-info-label">NIM</p>
+                            <p class="modal-info-value" id="modal-nim">—</p>
+                        </div>
+                    </div>
+                    <div class="modal-info-item">
+                        <span class="modal-info-icon">🎖️</span>
+                        <div>
+                            <p class="modal-info-label">Jabatan</p>
+                            <p class="modal-info-value" id="modal-jabatan">Anggota</p>
+                        </div>
+                    </div>
+                    <div class="modal-info-item">
+                        <span class="modal-info-icon">📅</span>
+                        <div>
+                            <p class="modal-info-label">Angkatan</p>
+                            <p class="modal-info-value" id="modal-angkatan">2024</p>
+                        </div>
+                    </div>
+                    <div class="modal-info-item">
+                        <span class="modal-info-icon">⭐</span>
+                        <div>
+                            <p class="modal-info-label">Status</p>
+                            <p class="modal-info-value" id="modal-status-text">Aktif</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="mahasiswa.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

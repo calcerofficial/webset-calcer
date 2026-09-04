@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Calcer Official</title>
+    <!-- FontAwesome Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="dashboard_admin.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <h2>Calcer Admin</h2>
+        </div>
+        <ul class="nav-links">
+            <li class="active" data-tab="overview">
+                <a href="dashboard_admin.html"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
+            </li>
+            <li>
+                <a href="mahasiswa_admin.html"><i class="fa-solid fa-users"></i><span>Data Mahasiswa</span></a>
+            </li>
+            <li>
+                <a href="Prestasi_admin.html"><i class="fa-solid fa-trophy"></i><span>Kelola Prestasi</span></a>
+            </li>
+            <li>
+                <a href="kenangan_admin.html"><i class="fa-solid fa-images"></i><span>Kelola Kenangan</span></a>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="login_admin.html" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i><span>Keluar</span></a>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Top Navigation Bar -->
+        <header class="topbar">
+            <div class="welcome-text">
+                <h1>Selamat Datang, Admin!</h1>
+                <p>Panel Kontrol Calcer Official 2C - MI</p>
+            </div>
+            <div class="user-profile">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>Muhammad Nabil</span>
+            </div>
+        </header>
+
+        <!-- Tab Content 1: Dashboard -->
+        <section id="tab-overview" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fa-solid fa-user-graduate"></i></div>
+                    <div class="stat-info">
+                        <h3>Total Mahasiswa</h3>
+                        <p id="stat-mhs-count">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon yellow"><i class="fa-solid fa-award"></i></div>
+                    <div class="stat-info">
+                        <h3>Total Prestasi</h3>
+                        <p id="stat-prestasi-count">12</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fa-solid fa-camera"></i></div>
+                    <div class="stat-info">
+                        <h3>Foto Kenangan</h3>
+                        <p id="stat-kenangan-count">48</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Area Diagram / Chart -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h2>Statistik Prestasi Per Tahun</h2>
+                    <canvas id="prestasiChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h2>Riwayat Aktivitas & Perubahan Data</h2>
+                    <div class="activity-log-container">
+                        <ul id="activityLogList" class="activity-log-list">
+                            <li class="empty-log">Memuat riwayat aktivitas...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-section">
+                <h2>Aktivitas Terbaru</h2>
+                <ul class="activity-list">
+                    <li><i class="fa-solid fa-plus-circle"></i> Menambahkan foto kenangan baru ke album <i>Viva La Programma</i></li>
+                    <li><i class="fa-solid fa-pen-to-square"></i> Mengubah status data mahasiswa: <b>Ahmad Risky</b></li>
+                    <li><i class="fa-solid fa-trophy"></i> Menambahkan prestasi baru: <b>Juara 1 Web Design ASTRATech 2026</b></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Script External & Database Connection -->
+    <script src="../koneksi_database.js"></script>
+    <script src="dashboard_admin.js"></script>
+</body>
+</html>

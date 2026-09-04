@@ -1,0 +1,311 @@
+/* ========================================================
+   PRESTASI CSS
+   Desain eksklusif dan premium untuk halaman prestasi
+======================================================== */
+
+/* Header Area */
+.prestasi-header {
+    position: relative;
+    padding: 8rem 2rem 5rem 2rem;
+    background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+    overflow: hidden;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.prestasi-header-content {
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.prestasi-badge {
+    display: inline-block;
+    padding: 8px 24px;
+    background: rgba(56, 189, 248, 0.1);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.prestasi-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #f8fafc;
+    letter-spacing: -1px;
+    margin: 0 0 1rem 0;
+}
+
+.prestasi-sub {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+/* Dekorasi Header */
+.circle-decor {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 1;
+}
+
+.circle-1 {
+    width: 300px;
+    height: 300px;
+    background: rgba(59, 130, 246, 0.2);
+    top: -50px;
+    left: -50px;
+}
+
+.circle-2 {
+    width: 400px;
+    height: 400px;
+    background: rgba(139, 92, 246, 0.15);
+    bottom: -100px;
+    right: -100px;
+}
+
+/* Filter Area */
+.prestasi-filter-container {
+    background: #0f172a;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.prestasi-filter {
+    display: flex;
+    gap: 10px;
+    background: rgba(30, 41, 59, 0.5);
+    padding: 8px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filter-btn {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    padding: 10px 24px;
+    border-radius: 40px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    color: #f8fafc;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.filter-btn.active {
+    background: #3b82f6;
+    color: white;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+/* Card Grid */
+.prestasi-container {
+    background: #0f172a;
+    padding: 2rem 2rem 6rem 2rem;
+}
+
+.prestasi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.prestasi-card {
+    background: #1e293b;
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.05);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.prestasi-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.prestasi-card-img {
+    height: 200px;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-placeholder {
+    font-size: 5rem;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
+    transition: transform 0.3s ease;
+}
+
+.prestasi-card:hover .img-placeholder {
+    transform: scale(1.1);
+}
+
+.prestasi-year {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.prestasi-card-body {
+    padding: 1.8rem;
+}
+
+.prestasi-tag {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tag-akademik { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
+.tag-non { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245,158,11,0.2); }
+.tag-lomba { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; border: 1px solid rgba(139,92,246,0.2); }
+
+.prestasi-name {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.prestasi-winner {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    margin: 0;
+}
+
+/* Modal Prestasi */
+.prestasi-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.prestasi-modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.prestasi-modal-content {
+    background: #0f172a;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 600px;
+    overflow: hidden;
+    transform: scale(0.9) translateY(20px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 30px 100px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+.prestasi-modal.active .prestasi-modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.prestasi-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    transition: all 0.2s ease;
+}
+
+.prestasi-modal-close:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+    transform: scale(1.1);
+}
+
+.prestasi-modal-img {
+    width: 100%;
+    height: 300px;
+    background: #1e293b;
+    position: relative;
+}
+
+.prestasi-modal-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.prestasi-modal-info {
+    padding: 2rem;
+}
+
+.prestasi-modal-info h2 {
+    color: #f8fafc;
+    font-size: 1.8rem;
+    margin: 0 0 10px 0;
+}
+
+.prestasi-modal-info p {
+    color: #94a3b8;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Animasi Hide Card (untuk filtering) */
+.prestasi-card.hide {
+    display: none;
+}

@@ -1,0 +1,531 @@
+/* ==========================================================================
+   MAHASISWA.CSS — Styles khusus halaman Mahasiswa
+   Terpisah dari dashboard.css agar lebih rapi dan mudah dikelola
+   ========================================================================== */
+
+/* --- Gelombang Atas (antara navbar dan header) --- */
+.mhs-wave-top {
+    position: relative;
+    background: transparent;
+    height: 80px;
+    overflow: hidden;
+    margin-bottom: -2px;
+    z-index: 0;
+}
+
+/* --- Header Pengurus Kelas --- */
+.mhs-page-header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 40%, #1e40af 100%);
+    text-align: center;
+    padding: 3.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efek dot pattern */
+.mhs-page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+    z-index: 0;
+}
+
+/* Glow di tengah */
+.mhs-page-header::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(ellipse, rgba(59, 130, 246, 0.35) 0%, transparent 70%);
+    z-index: 0;
+}
+
+.mhs-badge {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    background: rgba(59, 130, 246, 0.25);
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    color: #93c5fd;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+}
+
+.mhs-page-title {
+    position: relative;
+    z-index: 1;
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -2px;
+    color: #ffffff;
+    margin: 0;
+    background: linear-gradient(180deg, #ffffff 50%, #93c5fd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+}
+
+.mhs-page-sub {
+    position: relative;
+    z-index: 1;
+    font-size: 1rem;
+    color: #94a3b8;
+    margin-top: 0.5rem;
+    letter-spacing: 1px;
+}
+
+/* --- Gelombang Bawah (antara header dan foto) --- */
+.mhs-wave-divider {
+    position: relative;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 40%, #1e40af 100%);
+    height: 120px;
+    overflow: hidden;
+    margin-top: -2px;
+}
+
+.mhs-waves {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 600px;
+}
+
+/* Animasi gelombang bawah */
+.mhs-parallax > use {
+    animation: mhs-move-forever 20s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+}
+.mhs-parallax > use:nth-child(1) { animation-delay: -2s; animation-duration: 7s; }
+.mhs-parallax > use:nth-child(2) { animation-delay: -3s; animation-duration: 10s; }
+.mhs-parallax > use:nth-child(3) { animation-delay: -4s; animation-duration: 13s; }
+.mhs-parallax > use:nth-child(4) { animation-delay: -5s; animation-duration: 20s; }
+
+@keyframes mhs-move-forever {
+    0%   { transform: translate3d(-90px, 0, 0); }
+    100% { transform: translate3d(85px, 0, 0); }
+}
+
+/* Animasi gelombang atas (arah berlawanan) */
+.mhs-parallax-top > use {
+    animation: mhs-move-forever-rev 20s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+}
+.mhs-parallax-top > use:nth-child(1) { animation-delay: -1s; animation-duration: 8s; }
+.mhs-parallax-top > use:nth-child(2) { animation-delay: -2s; animation-duration: 11s; }
+.mhs-parallax-top > use:nth-child(3) { animation-delay: -3s; animation-duration: 14s; }
+.mhs-parallax-top > use:nth-child(4) { animation-delay: -4s; animation-duration: 18s; }
+
+@keyframes mhs-move-forever-rev {
+    0%   { transform: translate3d(85px, 0, 0); }
+    100% { transform: translate3d(-90px, 0, 0); }
+}
+
+/* --- Tiban Container (foto di atas background) --- */
+.tiban-container {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 180px);
+    min-height: 600px;
+    background-color: #0f172a;
+    overflow: hidden;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+}
+
+.tiban-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35%;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.7) 0%, transparent 100%);
+    z-index: 1;
+}
+
+.tiban-container .bg-image {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    filter: brightness(0.9);
+}
+
+@keyframes floatPerson {
+    0%   { transform: translateX(-50%) translateY(0px); }
+    50%  { transform: translateX(-50%) translateY(-12px); }
+    100% { transform: translateX(-50%) translateY(0px); }
+}
+
+.tiban-container .fg-image {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 90%;
+    object-fit: contain;
+    z-index: 2;
+    animation: floatPerson 4s ease-in-out infinite;
+    transition: opacity 0.3s ease;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+}
+
+/* --- Slider Buttons --- */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    font-size: 1.5rem;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+}
+.slider-btn:hover {
+    background: rgba(255, 255, 255, 0.8);
+    color: #0f172a;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    transform: translateY(-50%) scale(1.1);
+}
+.prev-btn { left: 5%; }
+.next-btn { right: 5%; }
+
+/* --- Label Jabatan --- */
+.role-label {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.75);
+    color: #ffffff;
+    padding: 12px 35px;
+    border-radius: 50px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    z-index: 3;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    transition: opacity 0.3s ease;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* --- Section Mahasiswa (Card Grid) --- */
+.mhs-section {
+    background-color: #f1f5f9;
+    padding: 5rem 2rem 4rem 2rem;
+}
+
+.mhs-section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.mhs-section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -1px;
+    margin: 0 0 0.5rem 0;
+    position: relative;
+    display: inline-block;
+}
+
+.mhs-section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #3b82f6, #2563eb);
+    border-radius: 4px;
+    margin: 10px auto 0 auto;
+}
+
+.mhs-section-sub {
+    font-size: 1rem;
+    color: #64748b;
+    margin-top: 1rem;
+}
+
+.mhs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.mhs-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    cursor: pointer;
+}
+.mhs-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+    border-color: #3b82f6;
+}
+
+.mhs-card-photo {
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: #94a3b8;
+}
+
+.mhs-card-info {
+    padding: 1rem 1.2rem;
+    text-align: center;
+}
+
+.mhs-card-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+}
+
+.mhs-card-nim {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin: 0;
+}
+
+/* ===== MODAL PROFIL MAHASISWA ===== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-card {
+    background: white;
+    border-radius: 28px;
+    width: 100%;
+    max-width: 440px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+    transform: scale(0.9) translateY(20px);
+    transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+}
+
+.modal-overlay.active .modal-card {
+    transform: scale(1) translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(255,255,255,0.9);
+    border: 1px solid #e2e8f0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    color: #64748b;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+    transform: scale(1.1);
+}
+
+.modal-photo-area {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 40%, #1e40af 100%);
+    padding: 2.5rem 2rem 4rem 2rem;
+    text-align: center;
+    position: relative;
+}
+
+/* Tombol navigasi dalam modal */
+.modal-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-60%);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 1.1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(6px);
+    transition: all 0.2s ease;
+    z-index: 5;
+}
+
+.modal-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: #0f172a;
+    transform: translateY(-60%) scale(1.1);
+}
+
+.modal-prev { left: 14px; }
+.modal-next { right: 14px; }
+
+/* Counter (misal "3 / 24") */
+.modal-counter {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Transisi halus modal-card saat ganti profil */
+.modal-card {
+    transition: opacity 0.2s ease, transform 0.2s ease,
+                box-shadow 0.35s ease;
+}
+
+.modal-photo-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: 3px solid rgba(255,255,255,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    margin: 0 auto;
+    backdrop-filter: blur(4px);
+}
+
+.modal-status-badge {
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+    white-space: nowrap;
+}
+
+.modal-body {
+    padding: 2.5rem 2rem 2rem 2rem;
+    text-align: center;
+}
+
+.modal-nama {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.5px;
+}
+
+.modal-prodi {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0 0 1.5rem 0;
+}
+
+.modal-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    text-align: left;
+}
+
+.modal-info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 12px 16px;
+}
+
+.modal-info-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+}
+
+.modal-info-label {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 2px 0;
+}
+
+.modal-info-value {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+

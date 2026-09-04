@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenangan - Calcer Official</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="kenangan.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .gallery-loading {
+            text-align: center;
+            color: #64748b;
+            padding: 3rem;
+            font-size: 1.1rem;
+            grid-column: 1 / -1;
+        }
+        .gallery-empty {
+            text-align: center;
+            color: #64748b;
+            padding: 3rem;
+            font-size: 1.1rem;
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-left">
+            <img src="../assets/logokelas.png" alt="Logo Kelas" class="logo-img">
+            <h2>Calcer Official</h2>
+        </div>
+
+        <nav class="nav-links">
+            <a href="dashboard.html" class="nav-item">Dashboard</a>
+            <a href="dashboard.html#about" class="nav-item">About</a>
+            <a href="mahasiswa.html" class="nav-item">Mahasiswa</a>
+            <a href="prestasi.html" class="nav-item">Prestasi</a>
+            <a href="kenangan.html" class="nav-item active">Kenangan</a>
+        </nav>
+
+        <div class="nav-right">
+            <img src="../assets/logoastra.png" alt="Logo Astra" class="logo-img">
+        </div>
+    </header>
+
+    <main class="main-wrapper" style="padding-top: 0; min-height: 100vh;">
+        
+        <!-- Header Section -->
+        <div class="kenangan-header">
+            <h1 class="kenangan-title">Kenangan Kita</h1>
+            <p class="kenangan-sub">Setiap momen adalah cerita yang tak akan pernah terlupakan di Kelas 2C.</p>
+        </div>
+
+        <!-- Gallery Section - Dimuat dari database -->
+        <div class="kenangan-container">
+            <div class="gallery-grid" id="galleryGrid">
+                <div class="gallery-loading" id="galleryLoading">
+                    ⏳ Memuat kenangan...
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Lightbox -->
+    <div class="lightbox-modal" id="lightboxModal" onclick="tutupFoto()">
+        <button class="lightbox-close" onclick="tutupFoto()">&#10005;</button>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <img id="lightboxImg" src="" alt="Zoom Foto">
+            <div class="lightbox-caption">
+                <h3 id="lightboxTitle">Judul Foto</h3>
+                <span id="lightboxYear">2025</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script src="kenangan.js"></script>
+</body>
+</html>

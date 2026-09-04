@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prestasi - Calcer Official</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="prestasi.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-left">
+            <img src="../assets/logokelas.png" alt="Logo Kelas" class="logo-img">
+            <h2>Calcer Official</h2>
+        </div>
+
+        <nav class="nav-links">
+            <a href="dashboard.html" class="nav-item">Dashboard</a>
+            <a href="dashboard.html#about" class="nav-item">About</a>
+            <a href="mahasiswa.html" class="nav-item">Mahasiswa</a>
+            <a href="prestasi.html" class="nav-item active">Prestasi</a>
+            <a href="kenangan.html" class="nav-item">Kenangan</a>
+        </nav>
+
+        <div class="nav-right">
+            <img src="../assets/logoastra.png" alt="Logo Astra" class="logo-img">
+        </div>
+    </header>
+
+    <main class="main-wrapper" style="padding-top: 0; background-color: #0f172a; min-height: 100vh;">
+        <!-- Header Section with Dynamic Background -->
+        <div class="prestasi-header">
+            <div class="prestasi-header-content">
+                <span class="prestasi-badge">🏆 Hall of Fame</span>
+                <h1 class="prestasi-title">Prestasi Kami</h1>
+                <p class="prestasi-sub">Jejak langkah dan pencapaian membanggakan keluarga besar Kelas 2C Manajemen Informatika.</p>
+            </div>
+            
+            <!-- Animated decorative elements -->
+            <div class="circle-decor circle-1"></div>
+            <div class="circle-decor circle-2"></div>
+        </div>
+
+        <!-- Filter / Tabs -->
+        <div class="prestasi-filter-container">
+            <div class="prestasi-filter">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="akademik">Akademik</button>
+                <button class="filter-btn" data-filter="non-akademik">Non-Akademik</button>
+                <button class="filter-btn" data-filter="lomba">5K2s PROJECT</button>
+            </div>
+        </div>
+
+        <!-- Timeline / Grid Prestasi -->
+        <div class="prestasi-container">
+            <div class="prestasi-grid" id="prestasiGridContainer">
+                <!-- Data prestasi akan dimuat secara dinamis -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Detail / Sertifikat -->
+    <div class="prestasi-modal" id="prestasiModal" onclick="tutupSertifikat()">
+        <div class="prestasi-modal-content" onclick="event.stopPropagation()">
+            <button class="prestasi-modal-close" onclick="tutupSertifikat()">&#10005;</button>
+            <div class="prestasi-modal-img">
+                <img id="modalSertifikatImg" src="" alt="Sertifikat">
+            </div>
+            <div class="prestasi-modal-info">
+                <h2 id="modalSertifikatTitle">Judul Prestasi</h2>
+                <p id="modalSertifikatDesc">Deskripsi lengkap mengenai prestasi ini.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gunakan dashboard.js untuk navbar dan fungsi dasar, prestasi.js untuk logika halaman ini -->
+    <script src="dashboard.js"></script>
+    <script src="prestasi.js"></script>
+</body>
+</html>
