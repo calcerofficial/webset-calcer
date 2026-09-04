@@ -107,7 +107,7 @@ body {
 
 .hero-full {
     position: relative;
-    background-image: url('../assets/fotokelas.jpg');
+    background-image: url('./assets/fotokelas.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
