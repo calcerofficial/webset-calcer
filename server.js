@@ -5,10 +5,10 @@ const path = require('path');
 const fs = require('fs');
 const { sql, poolPromise } = require('./koneksi_database');
 
-// Pastikan folder uploads ada
+// Pastikan folder uploads ada (di Vercel gunakan /tmp jika read-only)
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir);
+    fs.mkdirSync(uploadDir, { recursive: true });
 }
 
 // Konfigurasi Multer
@@ -25,7 +25,16 @@ const upload = multer({ storage: storage });
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use('/uploads', express.static('uploads'));
+
+// Serve folder statis (HTML, CSS, JS, & Uploads)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/admin', express.static(path.join(__dirname, 'admin')));
+
+// Redirect Halaman Utama (root) langsung ke Public Dashboard
+app.get('/', (req, res) => {
+    res.redirect('/public/dashboard.html');
+});
 
 // ============================================
 // Activity Log System (In-Memory)
@@ -33,13 +42,11 @@ app.use('/uploads', express.static('uploads'));
 const activityLogs = [];
 function addLog(deskripsi) {
     const now = new Date();
-    // Add to the beginning of the array
     activityLogs.unshift({
         id: Date.now(),
         waktu: now.toISOString(),
         deskripsi: deskripsi
     });
-    // Keep max 50 logs
     if (activityLogs.length > 50) {
         activityLogs.pop();
     }
@@ -83,16 +90,13 @@ app.post('/api/login', async (req, res) => {
 app.get('/api/dashboard-stats', async (req, res) => {
     try {
         const pool = await poolPromise;
-        
-        // Asumsi struktur query sederhana untuk menghitung total
         const mhsResult = await pool.request().query('SELECT COUNT(*) as total FROM mahasiswa');
         const prestasiResult = await pool.request().query('SELECT COUNT(*) as total FROM Prestasi');
         const kenanganResult = await pool.request().query('SELECT COUNT(*) as total FROM Kenangan');
         
-        // Data statistik bulanan 2025
         const chartPrestasi = { 
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'], 
-            data: [1, 0, 2, 0, 1, 3, 0, 0, 1, 4, 0, 0] // Data dummy untuk contoh 2025
+            data: [1, 0, 2, 0, 1, 3, 0, 0, 1, 4, 0, 0]
         }; 
 
         res.json({
@@ -124,7 +128,7 @@ app.post('/api/mahasiswa', upload.single('foto'), async (req, res) => {
     let foto = req.body.foto || null; 
 
     if (req.file) {
-        foto = 'http://localhost:3000/uploads/' + req.file.filename;
+        foto = '/uploads/' + req.file.filename;
     }
 
     try {
@@ -153,7 +157,7 @@ app.put('/api/mahasiswa/:nim', upload.single('foto'), async (req, res) => {
     let foto = req.body.foto || null; 
 
     if (req.file) {
-        foto = 'http://localhost:3000/uploads/' + req.file.filename;
+        foto = '/uploads/' + req.file.filename;
     }
 
     try {
@@ -195,7 +199,6 @@ app.delete('/api/mahasiswa/:nim', async (req, res) => {
 // API Endpoint Prestasi
 // ============================================
 
-// GET: Ambil semua prestasi
 app.get('/api/prestasi', async (req, res) => {
     try {
         const pool = await poolPromise;
@@ -206,12 +209,11 @@ app.get('/api/prestasi', async (req, res) => {
     }
 });
 
-// POST: Tambah prestasi baru
 app.post('/api/prestasi', upload.single('foto'), async (req, res) => {
     const { judul_prestasi, kategori, keterangan } = req.body;
     let foto = null;
     if (req.file) {
-        foto = 'http://localhost:3000/uploads/' + req.file.filename;
+        foto = '/uploads/' + req.file.filename;
     }
     try {
         const pool = await poolPromise;
@@ -229,13 +231,12 @@ app.post('/api/prestasi', upload.single('foto'), async (req, res) => {
     }
 });
 
-// PUT: Update prestasi
 app.put('/api/prestasi/:id', upload.single('foto'), async (req, res) => {
     const { id } = req.params;
     const { judul_prestasi, kategori, keterangan } = req.body;
     let foto = req.body.foto || null;
     if (req.file) {
-        foto = 'http://localhost:3000/uploads/' + req.file.filename;
+        foto = '/uploads/' + req.file.filename;
     }
     try {
         const pool = await poolPromise;
@@ -254,7 +255,6 @@ app.put('/api/prestasi/:id', upload.single('foto'), async (req, res) => {
     }
 });
 
-// DELETE: Hapus prestasi
 app.delete('/api/prestasi/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -274,7 +274,6 @@ app.delete('/api/prestasi/:id', async (req, res) => {
 // API Endpoint Kenangan
 // ============================================
 
-// GET: Ambil semua kenangan
 app.get('/api/kenangan', async (req, res) => {
     try {
         const pool = await poolPromise;
@@ -285,12 +284,11 @@ app.get('/api/kenangan', async (req, res) => {
     }
 });
 
-// POST: Tambah kenangan baru
 app.post('/api/kenangan', upload.single('foto'), async (req, res) => {
     const { judul_foto } = req.body;
     let foto = req.body.foto || null;
     if (req.file) {
-        foto = 'http://localhost:3000/uploads/' + req.file.filename;
+        foto = '/uploads/' + req.file.filename;
     }
     try {
         const pool = await poolPromise;
@@ -306,7 +304,6 @@ app.post('/api/kenangan', upload.single('foto'), async (req, res) => {
     }
 });
 
-// PUT: Update kenangan
 app.put('/api/kenangan/:id', async (req, res) => {
     const { id } = req.params;
     const { judul_foto, foto } = req.body;
@@ -325,7 +322,6 @@ app.put('/api/kenangan/:id', async (req, res) => {
     }
 });
 
-// DELETE: Hapus kenangan
 app.delete('/api/kenangan/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -341,7 +337,11 @@ app.delete('/api/kenangan/:id', async (req, res) => {
     }
 });
 
-const PORT = 3000;
+// Jalankan Server Lokal
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server Backend berjalan di http://localhost:${PORT}`);
 });
+
+// Export modul app untuk Vercel
+module.exports = app;
