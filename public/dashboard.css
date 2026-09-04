@@ -107,8 +107,8 @@ body {
 
 .hero-full {
     position: relative;
-    /* Diperbaiki: Menggunakan background-image standar tanpa 'fixed' agar kompatibel di Vercel */
-    background-image: url('../assets/fotokelas.jpg');
+    /* Path diubah ke ./assets/fotokelas.jpg */
+    background-image: url('./assets/fotokelas.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
