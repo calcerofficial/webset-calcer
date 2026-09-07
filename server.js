@@ -11,7 +11,7 @@ if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Konfigurasi Multer
+// Konfigurasi Multerxq
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/')
@@ -330,12 +330,10 @@ app.delete('/api/kenangan/:id', async (req, res) => {
 });
 
 
-if (process.env.NODE_ENV !== 'production') {
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => {
-        console.log(`Server Backend berjalan di http://localhost:${PORT}`);
-    });
-}
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server Backend berjalan di port ${PORT}`);
+});
 
 
 module.exports = app;
