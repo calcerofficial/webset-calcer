@@ -5,14 +5,12 @@ const path = require('path');
 const fs = require('fs');
 const { poolPromise } = require('./koneksi_database');
 
-// Pastikan folder uploads ada (di Vercel gunakan /tmp jika read-only)k
 // Pastikan folder uploads ada (di Vercel gunakan /tmp jika read-only)
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Konfigurasi Multerxq
 // Konfigurasi Multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -333,7 +331,6 @@ app.delete('/api/kenangan/:id', async (req, res) => {
 
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server Backend berjalan di port ${PORT}`);
 });
