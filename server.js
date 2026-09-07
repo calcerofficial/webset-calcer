@@ -285,7 +285,7 @@ app.post('/api/kenangan', upload.single('foto'), async (req, res) => {
     try {
         const pool = await poolPromise;
         await pool.query(
-            'INSERT INTO Kenangan (judul_foto, foto, tanggal_updload) VALUES (?, ?, NOW())',
+            'INSERT INTO Kenangan (judul_foto, foto, tanggal_upload) VALUES (?, ?, NOW())',
             [judul_foto, foto]
         );
         
