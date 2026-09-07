@@ -331,12 +331,6 @@ app.delete('/api/kenangan/:id', async (req, res) => {
 
 
 const PORT = process.env.PORT || 3000;
-
-
-if (require.main === module) {
-    app.listen(PORT, () => {
-        console.log(`Server Backend berjalan di port ${PORT}`);
-    });
-}
-
-module.exports = app;
+app.listen(PORT, () => {
+    console.log(`Server Backend berjalan di port ${PORT}`);
+});
