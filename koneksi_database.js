@@ -8,7 +8,12 @@ const config = {
     database: process.env.DB_NAME || 'calcer_official',
     ssl: {
         rejectUnauthorized: false
-    }
+    },
+    waitForConnections: true,
+    connectionLimit: 5,
+    queueLimit: 0,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 10000
 };
 
 const poolPromise = mysql.createPool(config);
