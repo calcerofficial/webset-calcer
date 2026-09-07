@@ -329,11 +329,13 @@ app.delete('/api/kenangan/:id', async (req, res) => {
     }
 });
 
-// Jalankan Server Lokal
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server Backend berjalan di http://localhost:${PORT}`);
-});
 
-// Export modul app untuk Vercel
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Server Backend berjalan di http://localhost:${PORT}`);
+    });
+}
+
+
 module.exports = app;
