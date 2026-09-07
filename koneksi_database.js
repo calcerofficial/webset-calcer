@@ -4,7 +4,7 @@ const config = {
     host: process.env.DB_HOST || 'mysql-1f1fa4c3-nabilkeceebet-ca32.l.aivencloud.com',
     port: process.env.DB_PORT || 16335,
     user: process.env.DB_USER || 'avnadmin',
-    password: process.env.DB_PASSWORD || 'AVNS_kA_D7Gq__5oS6QEmaEw',
+    password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'calcer_official',
     ssl: {
         rejectUnauthorized: false
@@ -18,7 +18,6 @@ const config = {
 
 const poolPromise = mysql.createPool(config);
 
-// Test koneksi saat server berjalan
 poolPromise.getConnection()
     .then(connection => {
         console.log('Berhasil terhubung ke Aiven MySQL Cloud!');

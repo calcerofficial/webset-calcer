@@ -5,7 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const { poolPromise } = require('./koneksi_database');
 
-// Pastikan folder uploads ada (di Vercel gunakan /tmp jika read-only)
+// Pastikan folder uploads ada (di Vercel gunakan /tmp jika read-only)k
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
