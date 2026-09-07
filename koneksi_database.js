@@ -1,27 +1,26 @@
-const sql = require('mssql');
+const mysql = require('mysql2/promise');
 
 const config = {
-    user: process.env.DB_USER || 'sa',
-    password: process.env.DB_PASSWORD || 'password_kamu',
-    server: process.env.DB_SERVER || 'localhost',
-    database: process.env.DB_NAME || 'nama_db_kamu',
-    options: {
-        encrypt: false,
-        trustServerCertificate: true
+    host: process.env.DB_HOST || 'mysql-1f1fa4c3-nabilkeceebet-ca32.l.aivencloud.com',
+    port: process.env.DB_PORT || 16335,
+    user: process.env.DB_USER || 'avnadmin',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'calcer_official',
+    ssl: {
+        rejectUnauthorized: false
     }
 };
 
-const poolPromise = new sql.ConnectionPool(config)
-    .connect()
-    .then(pool => {
-        console.log('Terhubung ke Database SQL');
-        return pool;
+const poolPromise = mysql.createPool(config);
+
+// Test koneksi saat server berjalan
+poolPromise.getConnection()
+    .then(connection => {
+        console.log('Berhasil terhubung ke Aiven MySQL Cloud!');
+        connection.release();
     })
     .catch(err => {
-        console.log('Gagal konek database (Abaikan jika di Vercel tanpa DB Cloud):', err.message);
-        return null; 
+        console.log('Gagal konek ke Aiven MySQL:', err.message);
     });
 
-module.exports = {
-    sql, poolPromise
-};
+module.exports = { poolPromise };

@@ -444,8 +444,83 @@ body {
     margin-bottom: 1rem;
 }
 
+/* ==========================================================================
+   RESPONSIVE DESIGN (ADMIN)
+   ========================================================================== */
+
 @media (max-width: 992px) {
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .sidebar-brand {
+        padding: 1rem;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0.5rem;
+    }
+
+    .nav-links li a {
+        padding: 0.5rem 1rem;
+        border-left: none;
+        border-bottom: 3px solid transparent;
+    }
+
+    .nav-links li.active a, .nav-links li a:hover {
+        border-left: none;
+        border-bottom: 3px solid #38bdf8;
+    }
+
+    .sidebar-footer {
+        padding: 0.5rem 1rem;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+
     .charts-grid {
         grid-template-columns: 1fr;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .table-header-action {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .btn-primary {
+        justify-content: center;
+    }
+
+    .modal-content {
+        max-width: 90%;
+        padding: 1.5rem;
     }
 }

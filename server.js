@@ -3,7 +3,7 @@ const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { sql, poolPromise } = require('./koneksi_database');
+const { poolPromise } = require('./koneksi_database');
 
 // Pastikan folder uploads ada (di Vercel gunakan /tmp jika read-only)
 const uploadDir = path.join(__dirname, 'uploads');
@@ -63,17 +63,17 @@ app.post('/api/login', async (req, res) => {
 
     try {
         const pool = await poolPromise;
-        const result = await pool.request()
-            .input('userParam', sql.VarChar, username)
-            .input('passParam', sql.VarChar, password)
-            .query('SELECT id, username, nama_lengkap, role FROM Users WHERE username = @userParam AND password = @passParam');
+        const [rows] = await pool.query(
+            'SELECT id, username, nama_lengkap, role FROM users WHERE username = ? AND password = ?',
+            [username, password]
+        );
 
-        if (result.recordset.length > 0) {
+        if (rows.length > 0) {
             addLog(`Admin login ke sistem`);
             res.json({ 
                 success: true, 
                 message: 'Login Berhasil',
-                user: result.recordset[0]
+                user: rows[0]
             });
         } else {
             res.status(401).json({ 
@@ -82,7 +82,8 @@ app.post('/api/login', async (req, res) => {
             });
         }
     } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+        console.error("ERROR LOGIN:", err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
@@ -90,9 +91,9 @@ app.post('/api/login', async (req, res) => {
 app.get('/api/dashboard-stats', async (req, res) => {
     try {
         const pool = await poolPromise;
-        const mhsResult = await pool.request().query('SELECT COUNT(*) as total FROM mahasiswa');
-        const prestasiResult = await pool.request().query('SELECT COUNT(*) as total FROM Prestasi');
-        const kenanganResult = await pool.request().query('SELECT COUNT(*) as total FROM Kenangan');
+        const [mhsRows] = await pool.query('SELECT COUNT(*) as total FROM mahasiswa');
+        const [prestasiRows] = await pool.query('SELECT COUNT(*) as total FROM Prestasi');
+        const [kenanganRows] = await pool.query('SELECT COUNT(*) as total FROM Kenangan');
         
         const chartPrestasi = { 
             labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'], 
@@ -101,13 +102,14 @@ app.get('/api/dashboard-stats', async (req, res) => {
 
         res.json({
             success: true,
-            totalMahasiswa: mhsResult.recordset[0].total,
-            totalPrestasi: prestasiResult.recordset[0].total,
-            totalKenangan: kenanganResult.recordset[0].total,
+            totalMahasiswa: mhsRows[0].total,
+            totalPrestasi: prestasiRows[0].total,
+            totalKenangan: kenanganRows[0].total,
             chartPrestasi
         });
     } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+        console.error("ERROR DASHBOARD STATS:", err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
@@ -115,10 +117,11 @@ app.get('/api/dashboard-stats', async (req, res) => {
 app.get('/api/mahasiswa', async (req, res) => {
     try {
         const pool = await poolPromise;
-        const result = await pool.request().query('SELECT * FROM mahasiswa');
-        res.json({ success: true, data: result.recordset });
+        const [rows] = await pool.query('SELECT * FROM mahasiswa');
+        res.json({ success: true, data: rows });
     } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+        console.error("ERROR GET MAHASISWA:", err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
@@ -133,20 +136,16 @@ app.post('/api/mahasiswa', upload.single('foto'), async (req, res) => {
 
     try {
         const pool = await poolPromise;
-        await pool.request()
-            .input('nim', sql.Int, parseInt(nim))
-            .input('nama', sql.VarChar, nama)
-            .input('jabatan', sql.VarChar, jabatan)
-            .input('sub_jabatan', sql.VarChar, sub_jabatan || null)
-            .input('angkatan', sql.Int, parseInt(angkatan))
-            .input('status', sql.VarChar, status)
-            .input('foto', sql.VarChar, foto)
-            .query('INSERT INTO mahasiswa (nim, nama, jabatan, sub_jabatan, angkatan, status, foto) VALUES (@nim, @nama, @jabatan, @sub_jabatan, @angkatan, @status, @foto)');
+        await pool.query(
+            'INSERT INTO mahasiswa (nim, nama, jabatan, sub_jabatan, angkatan, status, foto) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [parseInt(nim), nama, jabatan, sub_jabatan || null, parseInt(angkatan), status, foto]
+        );
         
         addLog(`Menambahkan data mahasiswa baru: ${nama}`);
         res.json({ success: true, message: 'Data mahasiswa berhasil ditambahkan' });
     } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+        console.error("ERROR POST MAHASISWA:", err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
@@ -162,20 +161,16 @@ app.put('/api/mahasiswa/:nim', upload.single('foto'), async (req, res) => {
 
     try {
         const pool = await poolPromise;
-        await pool.request()
-            .input('nim', sql.Int, parseInt(nim))
-            .input('nama', sql.VarChar, nama)
-            .input('jabatan', sql.VarChar, jabatan)
-            .input('sub_jabatan', sql.VarChar, sub_jabatan || null)
-            .input('angkatan', sql.Int, parseInt(angkatan))
-            .input('status', sql.VarChar, status)
-            .input('foto', sql.VarChar, foto)
-            .query('UPDATE mahasiswa SET nama = @nama, jabatan = @jabatan, sub_jabatan = @sub_jabatan, angkatan = @angkatan, status = @status, foto = @foto WHERE nim = @nim');
+        await pool.query(
+            'UPDATE mahasiswa SET nama = ?, jabatan = ?, sub_jabatan = ?, angkatan = ?, status = ?, foto = ? WHERE nim = ?',
+            [nama, jabatan, sub_jabatan || null, parseInt(angkatan), status, foto, parseInt(nim)]
+        );
         
         addLog(`Mengubah data mahasiswa: ${nama} (NIM: ${nim})`);
         res.json({ success: true, message: 'Data mahasiswa berhasil diupdate' });
     } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+        console.error("ERROR PUT MAHASISWA:", err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
@@ -184,14 +179,13 @@ app.delete('/api/mahasiswa/:nim', async (req, res) => {
     const { nim } = req.params;
     try {
         const pool = await poolPromise;
-        await pool.request()
-            .input('nim', sql.Int, parseInt(nim))
-            .query('DELETE FROM mahasiswa WHERE nim = @nim');
+        await pool.query('DELETE FROM mahasiswa WHERE nim = ?', [parseInt(nim)]);
         
         addLog(`Menghapus data mahasiswa NIM ${nim}`);
         res.json({ success: true, message: 'Data mahasiswa berhasil dihapus' });
     } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+        console.error("ERROR DELETE MAHASISWA:", err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
@@ -202,10 +196,11 @@ app.delete('/api/mahasiswa/:nim', async (req, res) => {
 app.get('/api/prestasi', async (req, res) => {
     try {
         const pool = await poolPromise;
-        const result = await pool.request().query('SELECT * FROM Prestasi ORDER BY id DESC');
-        res.json({ success: true, data: result.recordset });
+        const [rows] = await pool.query('SELECT * FROM Prestasi ORDER BY id DESC');
+        res.json({ success: true, data: rows });
     } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+        console.error("ERROR GET PRESTASI:", err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
@@ -217,17 +212,16 @@ app.post('/api/prestasi', upload.single('foto'), async (req, res) => {
     }
     try {
         const pool = await poolPromise;
-        await pool.request()
-            .input('judul_prestasi', sql.VarChar, judul_prestasi)
-            .input('kategori', sql.VarChar, kategori)
-            .input('keterangan', sql.VarChar, keterangan || null)
-            .input('foto', sql.VarChar, foto)
-            .query('INSERT INTO Prestasi (judul_prestasi, kategori, keterangan, foto) VALUES (@judul_prestasi, @kategori, @keterangan, @foto)');
+        await pool.query(
+            'INSERT INTO Prestasi (judul_prestasi, kategori, keterangan, foto) VALUES (?, ?, ?, ?)',
+            [judul_prestasi, kategori, keterangan || null, foto]
+        );
         
         addLog(`Menambahkan prestasi baru: ${judul_prestasi}`);
         res.json({ success: true, message: 'Prestasi berhasil ditambahkan' });
     } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+        console.error("ERROR POST PRESTASI:", err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
@@ -240,18 +234,16 @@ app.put('/api/prestasi/:id', upload.single('foto'), async (req, res) => {
     }
     try {
         const pool = await poolPromise;
-        await pool.request()
-            .input('id', sql.Int, parseInt(id))
-            .input('judul_prestasi', sql.VarChar, judul_prestasi)
-            .input('kategori', sql.VarChar, kategori)
-            .input('keterangan', sql.VarChar, keterangan || null)
-            .input('foto', sql.VarChar, foto)
-            .query('UPDATE Prestasi SET judul_prestasi = @judul_prestasi, kategori = @kategori, keterangan = @keterangan, foto = @foto WHERE id = @id');
+        await pool.query(
+            'UPDATE Prestasi SET judul_prestasi = ?, kategori = ?, keterangan = ?, foto = ? WHERE id = ?',
+            [judul_prestasi, kategori, keterangan || null, foto, parseInt(id)]
+        );
         
         addLog(`Mengubah data prestasi: ${judul_prestasi}`);
         res.json({ success: true, message: 'Prestasi berhasil diupdate' });
     } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+        console.error("ERROR PUT PRESTASI:", err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
@@ -259,14 +251,13 @@ app.delete('/api/prestasi/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const pool = await poolPromise;
-        await pool.request()
-            .input('id', sql.Int, parseInt(id))
-            .query('DELETE FROM Prestasi WHERE id = @id');
+        await pool.query('DELETE FROM Prestasi WHERE id = ?', [parseInt(id)]);
         
         addLog(`Menghapus data prestasi ID ${id}`);
         res.json({ success: true, message: 'Prestasi berhasil dihapus' });
     } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+        console.error("ERROR DELETE PRESTASI:", err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
@@ -277,10 +268,11 @@ app.delete('/api/prestasi/:id', async (req, res) => {
 app.get('/api/kenangan', async (req, res) => {
     try {
         const pool = await poolPromise;
-        const result = await pool.request().query('SELECT * FROM Kenangan ORDER BY id DESC');
-        res.json({ success: true, data: result.recordset });
+        const [rows] = await pool.query('SELECT * FROM Kenangan ORDER BY id DESC');
+        res.json({ success: true, data: rows });
     } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+        console.error("ERROR GET KENANGAN:", err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
@@ -292,15 +284,16 @@ app.post('/api/kenangan', upload.single('foto'), async (req, res) => {
     }
     try {
         const pool = await poolPromise;
-        await pool.request()
-            .input('judul_foto', sql.VarChar, judul_foto)
-            .input('foto', sql.VarChar, foto)
-            .query('INSERT INTO Kenangan (judul_foto, foto, tanggal_updload) VALUES (@judul_foto, @foto, GETDATE())');
+        await pool.query(
+            'INSERT INTO Kenangan (judul_foto, foto, tanggal_updload) VALUES (?, ?, NOW())',
+            [judul_foto, foto]
+        );
         
         addLog(`Menambahkan foto kenangan: ${judul_foto}`);
         res.json({ success: true, message: 'Kenangan berhasil ditambahkan' });
     } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+        console.error("ERROR POST KENANGAN:", err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
@@ -309,16 +302,16 @@ app.put('/api/kenangan/:id', async (req, res) => {
     const { judul_foto, foto } = req.body;
     try {
         const pool = await poolPromise;
-        await pool.request()
-            .input('id', sql.Int, parseInt(id))
-            .input('judul_foto', sql.VarChar, judul_foto)
-            .input('foto', sql.VarChar, foto)
-            .query('UPDATE Kenangan SET judul_foto = @judul_foto, foto = @foto WHERE id = @id');
+        await pool.query(
+            'UPDATE Kenangan SET judul_foto = ?, foto = ? WHERE id = ?',
+            [judul_foto, foto, parseInt(id)]
+        );
         
         addLog(`Mengubah data kenangan: ${judul_foto}`);
         res.json({ success: true, message: 'Kenangan berhasil diupdate' });
     } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+        console.error("ERROR PUT KENANGAN:", err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 
@@ -326,14 +319,13 @@ app.delete('/api/kenangan/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const pool = await poolPromise;
-        await pool.request()
-            .input('id', sql.Int, parseInt(id))
-            .query('DELETE FROM Kenangan WHERE id = @id');
+        await pool.query('DELETE FROM Kenangan WHERE id = ?', [parseInt(id)]);
         
         addLog(`Menghapus data kenangan ID ${id}`);
         res.json({ success: true, message: 'Kenangan berhasil dihapus' });
     } catch (err) {
-        res.status(500).json({ success: false, error: err.message });
+        console.error("ERROR DELETE KENANGAN:", err.message);
+        res.status(500).json({ success: false, message: err.message });
     }
 });
 

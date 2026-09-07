@@ -529,3 +529,70 @@
     margin: 0;
 }
 
+/* ==========================================================================
+   RESPONSIVE DESIGN (MAHASISWA)
+   ========================================================================== */
+
+/* Tablet */
+@media screen and (max-width: 1024px) {
+    .mhs-page-title {
+        font-size: 3rem;
+    }
+}
+
+/* Mobile Devices */
+@media screen and (max-width: 768px) {
+    .mhs-page-header {
+        padding: 2.5rem 1rem;
+    }
+    
+    .mhs-page-title {
+        font-size: 2.2rem;
+    }
+    
+    .tiban-container {
+        height: 400px;
+        min-height: 400px;
+    }
+    
+    .mhs-section {
+        padding: 3rem 1rem;
+    }
+    
+    .modal-info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .mhs-waves {
+        min-width: 100%;
+    }
+    
+    .slider-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+    
+    .role-label {
+        font-size: 1rem;
+        padding: 8px 20px;
+        bottom: 20px;
+    }
+}
+
+/* Small Mobile */
+@media screen and (max-width: 480px) {
+    .mhs-page-title {
+        font-size: 1.8rem;
+    }
+    
+    .mhs-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+    
+    .modal-card {
+        max-width: 95%;
+    }
+}
+
